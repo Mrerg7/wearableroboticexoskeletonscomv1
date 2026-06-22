@@ -1,0 +1,6 @@
+name = "wearableroboticexoskeletons-com"
+compatibility_date = "2026-06-01"
+pages_build_output_dir = "dist"
+
+[vars]
+SITE_URL = "https://wearableroboticexoskeletons.com"

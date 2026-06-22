@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #080b12;
+}
+
+/* Glass card effect */
+.glass {
+  background: rgba(15, 18, 25, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(30, 38, 54, 0.6);
+}
+
+/* Tech-blue glow accents */
+.glow-border {
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glow-border:hover {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+}
+
+/* Primary CTA button */
+.cta-primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transition: all 0.3s ease;
+}
+
+.cta-primary:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Secondary CTA button */
+.cta-secondary {
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cta-secondary:hover {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.08);
+}
+
+/* Dot grid background */
+.dot-grid {
+  background-image: radial-gradient(rgba(59, 130, 246, 0.15) 0.8px, transparent 0.8px);
+  background-size: 4px 4px;
+}
+
+/* Market stat card */
+.stat-card {
+  background: rgba(22, 27, 38, 0.8);
+  border: 1px solid rgba(30, 38, 54, 0.6);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Value driver number */
+.value-number {
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sticky CTA bar */
+.sticky-cta {
+  background: rgba(8, 11, 18, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(59, 130, 246, 0.2);
+}
