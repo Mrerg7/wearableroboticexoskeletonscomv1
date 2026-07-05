@@ -89,21 +89,25 @@ const buyerProfiles = [
   <section class="relative min-h-screen flex items-center justify-center pt-18 overflow-hidden">
     <!-- Background layers -->
     <div class="absolute inset-0 dot-grid"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-exo-black/60 via-transparent to-exo-black"></div>
 
-    <!-- Hero image (Cloudflare Images CDN) -->
-    <div class="absolute inset-0 opacity-30 sm:opacity-40">
+    <!-- Hero image — contained so full artwork stays visible -->
+    <div class="absolute inset-x-0 top-18 bottom-0 flex items-center justify-center pointer-events-none px-4 sm:px-8 lg:px-12">
       <img
         src={heroImage}
+        srcset={`${heroImage}?width=640 640w, ${heroImage}?width=1024 1024w, ${heroImage} 1366w`}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 1200px"
         alt="Wearable Robotic Exoskeleton — premium high-tech human augmentation"
-        class="w-full h-full object-cover"
+        class="hero-image"
         loading="eager"
         fetchpriority="high"
+        width="1366"
+        height="745"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-exo-black via-exo-black/50 to-transparent"></div>
     </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-exo-black/75 via-exo-black/45 to-exo-black pointer-events-none"></div>
+    <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-exo-black via-exo-black/85 to-transparent pointer-events-none"></div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-24 text-center">
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-28 sm:pb-24 text-center">
       <!-- Status badge -->
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-exo-blue/30 mb-8 animate-fade-in">
         <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse-slow"></div>

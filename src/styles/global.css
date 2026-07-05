@@ -54,6 +54,31 @@ body {
   background-size: 4px 4px;
 }
 
+/* Hero background image — full artwork visible, no side clipping */
+.hero-image {
+  width: 100%;
+  height: auto;
+  max-width: min(100%, 1366px);
+  max-height: min(52vh, 420px);
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.38;
+}
+
+@media (min-width: 640px) {
+  .hero-image {
+    max-height: min(68vh, 620px);
+    opacity: 0.46;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-image {
+    max-height: min(78vh, 745px);
+    opacity: 0.52;
+  }
+}
+
 /* Market stat card */
 .stat-card {
   background: rgba(22, 27, 38, 0.8);
