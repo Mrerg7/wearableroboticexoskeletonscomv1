@@ -55,22 +55,30 @@ body {
 }
 
 /* Hero background image — full artwork visible, no side clipping */
+.hero-image-frame {
+  width: 100%;
+  max-width: min(100%, 1366px);
+  max-height: min(52vh, 420px);
+}
+
 .hero-image {
+  display: block;
   width: 100%;
   height: auto;
-  max-width: min(100%, 1366px);
   max-height: min(52vh, 420px);
   object-fit: contain;
   object-position: center;
 }
 
 @media (min-width: 640px) {
+  .hero-image-frame,
   .hero-image {
     max-height: min(68vh, 620px);
   }
 }
 
 @media (min-width: 1024px) {
+  .hero-image-frame,
   .hero-image {
     max-height: min(78vh, 745px);
   }
