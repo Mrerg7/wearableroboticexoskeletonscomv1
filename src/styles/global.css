@@ -62,21 +62,24 @@ body {
   max-height: min(52vh, 420px);
   object-fit: contain;
   object-position: center;
-  opacity: 0.38;
 }
 
 @media (min-width: 640px) {
   .hero-image {
     max-height: min(68vh, 620px);
-    opacity: 0.46;
   }
 }
 
 @media (min-width: 1024px) {
   .hero-image {
     max-height: min(78vh, 745px);
-    opacity: 0.52;
   }
+}
+
+/* Keep headline readable without darkening the whole image */
+.hero-content h1,
+.hero-content p {
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* Market stat card */
