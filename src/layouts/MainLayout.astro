@@ -16,7 +16,7 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const siteUrl = 'https://wearableroboticexoskeletons.com';
+const siteUrl = 'https://wearableroboticexoskeletons.com/';
 const siteName = 'Wearable Robotic Exoskeletons';
 
 const structuredData = {
@@ -24,7 +24,7 @@ const structuredData = {
   '@graph': [
     {
       '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
+      '@id': `${siteUrl}#website`,
       url: siteUrl,
       name: siteName,
       description,
@@ -36,7 +36,7 @@ const structuredData = {
       url: canonicalURL,
       name: title,
       description,
-      isPartOf: { '@id': `${siteUrl}/#website` },
+      isPartOf: { '@id': `${siteUrl}#website` },
       inLanguage: 'en-US',
       primaryImageOfPage: {
         '@type': 'ImageObject',
