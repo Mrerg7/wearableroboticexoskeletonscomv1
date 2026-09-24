@@ -1,10 +1,20 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { DOMAIN_FAQS } from '../data/faq';
+import { SITE, HERO_IMAGE, acquisitionMailto } from '../constants/site';
 
-const heroImage = "https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/f82386a7-bc22-4685-5b00-a3b7de817400/public";
-const contactEmail = "sales@desertrich.com";
-const subjectLine = "Acquisition Inquiry — wearableroboticexoskeletons.com";
-const mailtoLink = `mailto:${contactEmail}?subject=${encodeURIComponent(subjectLine)}`;
+const heroImage = HERO_IMAGE;
+const contactEmail = SITE.email;
+const mailtoLink = acquisitionMailto();
+const faqs = DOMAIN_FAQS;
+
+const navLinks = [
+  { href: '#technology', label: 'Technology' },
+  { href: '#market', label: 'Market' },
+  { href: '#why', label: 'Why This Domain' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#contact', label: 'Contact' },
+];
 
 const marketStats = [
   { value: "15–22%+", label: "Compound Annual Growth Rate", detail: "Industry consensus CAGR through 2030–2033" },
@@ -59,15 +69,15 @@ const buyerProfiles = [
 ];
 ---
 
-<MainLayout>
+<MainLayout faq={faqs}>
   <!-- ============================================ -->
   <!-- NAVBAR                                       -->
   <!-- ============================================ -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-exo-border/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 glass border-b border-exo-border/60" aria-label="Primary">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-2.5 min-w-0" aria-label="wearableroboticexoskeletons.com home">
         <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-exo-blue to-exo-cyan flex items-center justify-center flex-shrink-0">
-          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
             <circle cx="12" cy="6" r="2"/>
             <path d="M4 18 L12 6 L20 18"/>
           </svg>
@@ -75,6 +85,16 @@ const buyerProfiles = [
         <span class="hidden sm:inline font-mono text-sm font-semibold tracking-tight text-white/90 truncate">
           wearableroboticexoskeletons.com
         </span>
+      </a>
+      <div class="hidden lg:flex items-center gap-6 mr-2">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-xs font-medium text-white/60 hover:text-white transition-colors duration-200 whitespace-nowrap"
+          >
+            {link.label}
+          </a>
+        ))}
       </div>
       <a href={mailtoLink}
          class="px-5 py-2 text-xs sm:text-sm font-semibold rounded-full border border-exo-blue/40 hover:bg-exo-blue hover:text-white transition-all duration-300 text-exo-blue-bright whitespace-nowrap">
@@ -82,6 +102,8 @@ const buyerProfiles = [
       </a>
     </div>
   </nav>
+
+  <main id="main">
 
   <!-- ============================================ -->
   <!-- HERO                                         -->
@@ -159,7 +181,7 @@ const buyerProfiles = [
   <!-- ============================================ -->
   <!-- ADVENT OF EXOSKELETONS                       -->
   <!-- ============================================ -->
-  <section class="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 lg:py-32">
+  <section id="technology" class="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 lg:py-32 scroll-mt-20">
     <div class="mb-4 font-mono text-xs tracking-[3px] uppercase text-exo-blue-bright">The Technology</div>
     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-8 leading-tight">
       The Advent of Wearable<br class="hidden sm:block" /> Robotic Exoskeletons
@@ -211,7 +233,7 @@ const buyerProfiles = [
   <!-- ============================================ -->
   <!-- MARKET OPPORTUNITY                           -->
   <!-- ============================================ -->
-  <section class="relative max-w-5xl mx-auto px-4 sm:px-6 py-24 lg:py-32 border-t border-exo-border/40">
+  <section id="market" class="relative max-w-5xl mx-auto px-4 sm:px-6 py-24 lg:py-32 border-t border-exo-border/40 scroll-mt-20">
     <div class="mb-4 font-mono text-xs tracking-[3px] uppercase text-exo-cyan">Market Overview</div>
     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 leading-tight">
       Explosive Market Opportunity
@@ -281,12 +303,16 @@ const buyerProfiles = [
       Major players — Ekso Bionics, ReWalk Robotics, Cyberdyne (HAL), Hocoma, Parker Hannifin, Sarcos, and others — are
       already commercializing products. This is no longer a niche curiosity; it is an emerging foundational technology.
     </p>
+    <p class="mt-4 text-xs text-white/40">
+      Market figures are directional estimates synthesized from publicly available industry analyses and are provided
+      for informational purposes only.
+    </p>
   </section>
 
   <!-- ============================================ -->
   <!-- VALUE DRIVERS                                -->
   <!-- ============================================ -->
-  <section class="relative max-w-5xl mx-auto px-4 sm:px-6 py-24 lg:py-32 border-t border-exo-border/40">
+  <section id="why" class="relative max-w-5xl mx-auto px-4 sm:px-6 py-24 lg:py-32 border-t border-exo-border/40 scroll-mt-20">
     <div class="mb-4 font-mono text-xs tracking-[3px] uppercase text-exo-blue-bright">Strategic Digital Real Estate</div>
     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 leading-tight">
       Why wearableroboticexoskeletons.com<br class="hidden sm:block" /> Commands a High Acquisition Price
@@ -365,6 +391,188 @@ const buyerProfiles = [
   </section>
 
   <!-- ============================================ -->
+  <!-- FAQ                                          -->
+  <!-- ============================================ -->
+  <section id="faq" class="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 lg:py-32 border-t border-exo-border/40 scroll-mt-20">
+    <div class="mb-4 font-mono text-xs tracking-[3px] uppercase text-exo-cyan">Questions</div>
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 leading-tight">
+      Frequently Asked Questions
+    </h2>
+    <p class="max-w-2xl text-white/65 text-base sm:text-lg mb-10 leading-relaxed">
+      Everything buyers typically ask before making an acquisition inquiry on
+      <span class="text-white font-semibold">wearableroboticexoskeletons.com</span>.
+    </p>
+
+    <div class="space-y-3">
+      {faqs.map((item) => (
+        <details class="glass rounded-xl border border-exo-border/40 group">
+          <summary class="cursor-pointer list-none px-5 sm:px-6 py-4 flex items-start justify-between gap-4 text-sm sm:text-base font-semibold text-white/90 hover:text-white transition-colors">
+            <span>{item.question}</span>
+            <svg class="w-4 h-4 flex-shrink-0 mt-1 text-exo-blue-bright transition-transform duration-200 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+          </summary>
+          <p class="px-5 sm:px-6 pb-5 text-sm sm:text-base text-white/65 leading-relaxed">
+            {item.answer}
+          </p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CONTACT / INQUIRY                            -->
+  <!-- ============================================ -->
+  <section id="contact" class="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 lg:py-32 border-t border-exo-border/40 scroll-mt-20">
+    <div class="mb-4 font-mono text-xs tracking-[3px] uppercase text-exo-blue-bright">Acquisition Inquiry</div>
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 leading-tight">
+      Start a Confidential Conversation
+    </h2>
+    <p class="max-w-2xl text-white/65 text-base sm:text-lg mb-10 leading-relaxed">
+      Tell us who you are and how you plan to use the domain. Serious, qualified inquiries receive a detailed
+      information package and flexible escrow-protected terms.
+    </p>
+
+    <form
+      id="inquiry-form"
+      class="glass rounded-2xl p-6 sm:p-8 border border-exo-border/40 space-y-5"
+      novalidate
+    >
+      <div class="grid sm:grid-cols-2 gap-5">
+        <label class="block">
+          <span class="block text-xs font-mono uppercase tracking-wider text-exo-silver mb-2">Name</span>
+          <input
+            type="text"
+            name="name"
+            required
+            autocomplete="name"
+            placeholder="Your full name"
+            class="w-full rounded-xl bg-exo-black/70 border border-exo-border/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-exo-blue/60 focus:ring-1 focus:ring-exo-blue/40"
+          />
+        </label>
+        <label class="block">
+          <span class="block text-xs font-mono uppercase tracking-wider text-exo-silver mb-2">Email</span>
+          <input
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="you@company.com"
+            class="w-full rounded-xl bg-exo-black/70 border border-exo-border/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-exo-blue/60 focus:ring-1 focus:ring-exo-blue/40"
+          />
+        </label>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <label class="block">
+          <span class="block text-xs font-mono uppercase tracking-wider text-exo-silver mb-2">Organization</span>
+          <input
+            type="text"
+            name="organization"
+            autocomplete="organization"
+            placeholder="Company or fund (optional)"
+            class="w-full rounded-xl bg-exo-black/70 border border-exo-border/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-exo-blue/60 focus:ring-1 focus:ring-exo-blue/40"
+          />
+        </label>
+        <label class="block">
+          <span class="block text-xs font-mono uppercase tracking-wider text-exo-silver mb-2">Indicative Offer (USD)</span>
+          <input
+            type="text"
+            name="offer"
+            inputmode="numeric"
+            placeholder="e.g. 85000"
+            class="w-full rounded-xl bg-exo-black/70 border border-exo-border/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-exo-blue/60 focus:ring-1 focus:ring-exo-blue/40"
+          />
+        </label>
+      </div>
+      <label class="block">
+        <span class="block text-xs font-mono uppercase tracking-wider text-exo-silver mb-2">Intended Use / Message</span>
+        <textarea
+          name="message"
+          rows="4"
+          required
+          placeholder="Describe your intended use for wearableroboticexoskeletons.com and any timing constraints…"
+          class="w-full rounded-xl bg-exo-black/70 border border-exo-border/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-exo-blue/60 focus:ring-1 focus:ring-exo-blue/40 resize-y"
+        ></textarea>
+      </label>
+
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-1">
+        <button
+          type="submit"
+          class="cta-primary px-8 py-3.5 rounded-full text-white font-semibold text-sm inline-flex items-center justify-center gap-2 min-h-[44px]"
+        >
+          Send Acquisition Inquiry
+        </button>
+        <a
+          href={mailtoLink}
+          class="text-sm text-exo-blue-bright hover:text-white font-medium transition-colors break-all"
+        >
+          or email {contactEmail} directly
+        </a>
+      </div>
+      <p class="text-xs text-white/40 leading-relaxed">
+        Submitting opens your email client with a pre-filled message to {contactEmail}. Transactions are
+        escrow-protected via Escrow.com. Serious inquiries only.
+      </p>
+      <p id="form-status" class="text-sm text-exo-cyan hidden" role="status" aria-live="polite"></p>
+    </form>
+
+    <script is:inline>
+      (function () {
+        var form = document.getElementById('inquiry-form');
+        var status = document.getElementById('form-status');
+        if (!form) return;
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var data = new FormData(form);
+          var name = (data.get('name') || '').toString().trim();
+          var email = (data.get('email') || '').toString().trim();
+          var org = (data.get('organization') || '').toString().trim();
+          var offer = (data.get('offer') || '').toString().trim();
+          var message = (data.get('message') || '').toString().trim();
+
+          if (!name || !email || !message) {
+            if (status) {
+              status.textContent = 'Please fill in name, email, and message.';
+              status.classList.remove('hidden');
+              status.className = 'text-sm text-amber-400';
+            }
+            return;
+          }
+
+          var subject = 'Acquisition Inquiry — wearableroboticexoskeletons.com';
+          var body = [
+            'Name: ' + name,
+            'Email: ' + email,
+            org ? 'Organization: ' + org : null,
+            offer ? 'Indicative offer (USD): ' + offer : null,
+            '',
+            message,
+            '',
+            '— Sent from wearableroboticexoskeletons.com',
+          ]
+            .filter(function (line) {
+              return line !== null;
+            })
+            .join('\n');
+
+          var href =
+            'mailto:sales@desertrich.com?subject=' +
+            encodeURIComponent(subject) +
+            '&body=' +
+            encodeURIComponent(body);
+
+          if (status) {
+            status.textContent = 'Opening your email client…';
+            status.classList.remove('hidden');
+            status.className = 'text-sm text-exo-cyan';
+          }
+          window.location.href = href;
+        });
+      })();
+    </script>
+  </section>
+
+  <!-- ============================================ -->
   <!-- FINAL CTA                                    -->
   <!-- ============================================ -->
   <section class="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 lg:py-32 text-center border-t border-exo-border/40">
@@ -398,6 +606,7 @@ const buyerProfiles = [
       </span>
     </div>
   </section>
+  </main>
 
   <!-- ============================================ -->
   <!-- STICKY MOBILE CTA                            -->
@@ -431,6 +640,19 @@ const buyerProfiles = [
 
       <!-- Divider -->
       <div class="border-t border-exo-border/40 pt-8">
+        <!-- Footer nav -->
+        <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-8" aria-label="Footer">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-xs text-white/45 hover:text-white/80 transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a href="/humans.txt" class="text-xs text-white/45 hover:text-white/80 transition-colors">humans.txt</a>
+          <a href="/llms.txt" class="text-xs text-white/45 hover:text-white/80 transition-colors">llms.txt</a>
+        </nav>
         <!-- Disclaimer -->
         <div class="max-w-3xl mx-auto text-center">
           <p class="text-xs text-white/35 leading-relaxed mb-4">

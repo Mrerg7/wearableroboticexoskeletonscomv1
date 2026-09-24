@@ -8,6 +8,10 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     tailwind({ applyBaseStyles: false }),
-    sitemap()
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+      changefreq: 'weekly',
+      priority: 1.0,
+    }),
   ],
 });

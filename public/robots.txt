@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
+Disallow: /*?s=
 
 Sitemap: https://wearableroboticexoskeletons.com/sitemap-index.xml
+Sitemap: https://wearableroboticexoskeletons.com/sitemap.xml

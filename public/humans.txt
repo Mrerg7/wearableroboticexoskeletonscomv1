@@ -1,0 +1,16 @@
+/* TEAM */
+Owner: Desert Rich
+Contact: sales@desertrich.com
+Location: Phoenix, Arizona, USA
+
+/* SITE */
+Title: wearableroboticexoskeletons.com — Premium Domain Acquisition
+Description: Exact-match premium .com domain for wearable robotic exoskeletons, available for acquisition.
+Language: en-US
+Doctype: HTML5
+Markup: Astro + Tailwind CSS
+Hosting: Cloudflare Workers (edge)
+Last updated: 2026-09-24
+
+/* HTTPS */
+https://wearableroboticexoskeletons.com

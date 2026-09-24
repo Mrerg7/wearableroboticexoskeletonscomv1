@@ -1,23 +1,34 @@
 ---
 import '../styles/global.css';
+import {
+  SITE,
+  OG_IMAGE,
+  OG_IMAGE_WIDTH,
+  OG_IMAGE_HEIGHT,
+} from '../constants/site';
+import type { FaqItem } from '../data/faq';
 
 export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  canonicalPath?: string;
   noindex?: boolean;
+  faq?: FaqItem[];
 }
 
 const {
-  title = "Wearable Robotic Exoskeletons | Premium Domain — wearableroboticexoskeletons.com",
-  description = "Own the definitive premium .com domain for the wearable robotic exoskeleton industry. Exact-match category authority — strategically positioned for the multi-billion-dollar exoskeleton market: healthcare, industrial, defense, and consumer applications.",
-  image = "https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/f82386a7-bc22-4685-5b00-a3b7de817400/public",
+  title = SITE.title,
+  description = SITE.description,
+  image = OG_IMAGE,
+  canonicalPath = '/',
   noindex = false,
+  faq = [],
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const siteUrl = 'https://wearableroboticexoskeletons.com/';
-const siteName = 'Wearable Robotic Exoskeletons';
+const canonicalUrl = new URL(canonicalPath, SITE.url).href;
+const siteUrl = `${SITE.url}/`;
+const siteName = SITE.name;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -27,72 +38,105 @@ const structuredData = {
       '@id': `${siteUrl}#website`,
       url: siteUrl,
       name: siteName,
-      description,
-      inLanguage: 'en-US',
-    },
-    {
-      '@type': 'WebPage',
-      '@id': `${canonicalURL}#webpage`,
-      url: canonicalURL,
-      name: title,
-      description,
-      isPartOf: { '@id': `${siteUrl}#website` },
-      inLanguage: 'en-US',
-      primaryImageOfPage: {
-        '@type': 'ImageObject',
-        url: image,
+      description: SITE.description,
+      inLanguage: SITE.language,
+      datePublished: SITE.datePublished,
+      dateModified: SITE.dateModified,
+      publisher: {
+        '@type': 'Organization',
+        '@id': `${siteUrl}#organization`,
+        name: SITE.owner,
+        url: siteUrl,
+        email: SITE.email,
       },
     },
     {
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: title,
+      description,
+      isPartOf: { '@id': `${siteUrl}#website` },
+      inLanguage: SITE.language,
+      datePublished: SITE.datePublished,
+      dateModified: SITE.dateModified,
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: image,
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
+        contentUrl: image,
+      },
+      breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` },
+      about: {
+        '@type': 'Thing',
+        name: `${SITE.domain} premium domain`,
+        sameAs: siteUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: siteUrl,
+        },
+      ],
+    },
+    {
       '@type': 'Product',
-      name: `${siteName} — Premium Domain Name`,
-      description: 'The exact-match, authoritative .com domain for the wearable robotic exoskeleton industry. Category-defining digital real estate positioned for the multi-billion-dollar exoskeleton revolution.',
+      '@id': `${siteUrl}#product`,
+      name: `${SITE.domain} Premium Domain`,
+      description:
+        'The exact-match, authoritative .com domain for the wearable robotic exoskeleton industry. Category-defining digital real estate positioned for the multi-billion-dollar exoskeleton revolution.',
       url: siteUrl,
-      image: image,
+      image: [image],
       category: 'Domain Name',
       brand: {
         '@type': 'Brand',
         name: siteName,
       },
+      additionalProperty: [
+        { '@type': 'PropertyValue', name: 'Domain name', value: SITE.domain },
+        { '@type': 'PropertyValue', name: 'TLD', value: '.com' },
+        { '@type': 'PropertyValue', name: 'Category', value: 'Exact-match premium domain' },
+        { '@type': 'PropertyValue', name: 'Status', value: 'Available for acquisition' },
+        { '@type': 'PropertyValue', name: 'Industry', value: 'Wearable robotic exoskeletons' },
+      ],
       offers: {
-        '@type': 'Offer',
-        url: canonicalURL,
+        '@type': 'AggregateOffer',
         availability: 'https://schema.org/InStock',
+        lowPrice: SITE.valuationLow,
+        highPrice: SITE.valuationHigh,
         priceCurrency: 'USD',
-        price: '75000.00',
-        priceSpecification: {
-          '@type': 'PriceSpecification',
-          price: '75000.00',
-          priceCurrency: 'USD',
-          minPrice: '75000.00',
-          maxPrice: '195000.00',
-        },
+        offerCount: 1,
+        url: canonicalUrl,
+        priceValidUntil: SITE.priceValidUntil,
+        eligibleTransactionType: 'https://schema.org/Trade',
         seller: {
           '@type': 'Organization',
-          name: 'Desert Rich',
-          email: 'sales@desertrich.com',
+          '@id': `${siteUrl}#organization`,
+          name: SITE.owner,
+          email: SITE.email,
+          url: siteUrl,
         },
-        hasMerchantReturnPolicy: {
-          '@type': 'MerchantReturnPolicy',
-          applicableCountry: 'US',
-          returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-          merchantReturnDays: 0,
-          name: 'No Returns',
-          description: 'Due to the nature of digital domain name assets, returns are not applicable after transfer.',
-        },
+        description: `Valuation range $${SITE.valuationLow.toLocaleString('en-US')}–$${SITE.valuationHigh.toLocaleString('en-US')}. Serious offers considered; flexible terms available.`,
         shippingDetails: {
           '@type': 'OfferShippingDetails',
           shippingRate: {
             '@type': 'MonetaryAmount',
-            value: 0,
+            value: '0.00',
             currency: 'USD',
           },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
             handlingTime: {
               '@type': 'QuantitativeValue',
-              minValue: 1,
-              maxValue: 5,
+              minValue: 0,
+              maxValue: 1,
               unitCode: 'DAY',
             },
             transitTime: {
@@ -107,27 +151,58 @@ const structuredData = {
             addressCountry: 'US',
           },
         },
-      },
-      review: {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5',
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+          merchantReturnDays: 0,
+          applicableCountry: 'US',
+          name: 'No Returns',
+          description:
+            'Due to the nature of digital domain name assets, returns are not applicable after transfer. Escrow-backed transactions protect the buyer during transfer.',
         },
-        author: {
-          '@type': 'Organization',
-          name: 'Desert Rich',
-        },
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5',
-        bestRating: '5',
-        ratingCount: 1,
-        reviewCount: 1,
       },
     },
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}#organization`,
+      name: SITE.owner,
+      alternateName: siteName,
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: image,
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
+      },
+      image,
+      sameAs: [
+        'https://github.com/Mrerg7',
+        `https://github.com/Mrerg7/wearableroboticexoskeletonscomv1`,
+      ],
+      areaServed: 'Worldwide',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: SITE.email,
+        availableLanguage: 'English',
+      },
+    },
+    ...(faq.length > 0
+      ? [
+          {
+            '@type': 'FAQPage',
+            '@id': `${canonicalUrl}#faq`,
+            mainEntity: faq.map((item) => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer,
+              },
+            })),
+          },
+        ]
+      : []),
   ],
 };
 ---
@@ -139,41 +214,69 @@ const structuredData = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="generator" content={Astro.generator} />
+  <meta name="author" content={SITE.owner} />
+  <meta name="theme-color" content="#080b12" />
+  <meta name="format-detection" content="telephone=no" />
 
   <!-- Google Site Verification -->
-  <meta name="google-site-verification" content="qyBoStmNrHdXCe3N7-Yty5fzAyTuhP2GltSlODTmJuo" />
+  <meta name="google-site-verification" content={SITE.googleSiteVerification} />
 
-  <!-- Canonical -->
-  <link rel="canonical" href={canonicalURL} />
+  <!-- Robots -->
+  <meta
+    name="robots"
+    content={noindex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+  />
 
-  {noindex && <meta name="robots" content="noindex" />}
+  {!noindex && <link rel="canonical" href={canonicalUrl} />}
+  {!noindex && <link rel="alternate" hreflang="en" href={canonicalUrl} />}
+  {!noindex && <link rel="alternate" hreflang="x-default" href={canonicalUrl} />}
+  {!noindex && <link rel="describedby" type="text/markdown" href="/llms.txt" />}
+  {!noindex && <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM site summary" />}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:site_name" content={siteName} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
+  {!noindex && <meta property="og:url" content={canonicalUrl} />}
+  <meta property="og:locale" content={SITE.locale} />
   <meta property="og:image" content={image} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content={siteName} />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:image:secure_url" content={image} />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:alt" content="Wearable Robotic Exoskeleton — premium high-tech human augmentation" />
+  <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+  <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
+  <meta name="twitter:image:alt" content="Wearable Robotic Exoskeleton — premium high-tech human augmentation" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://imagedelivery.net" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+  <link rel="author" href="/humans.txt" />
+  <link rel="security-contact" href={`mailto:${SITE.email}`} />
+
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 </head>
 <body class="bg-exo-black text-white font-sans antialiased">
+  <a
+    href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-exo-blue focus:text-white focus:rounded-lg"
+  >
+    Skip to main content
+  </a>
   <slot />
 </body>
 </html>

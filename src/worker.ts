@@ -1,8 +1,12 @@
+/// <reference types="@cloudflare/workers-types" />
+
 interface Env {
   ASSETS: Fetcher;
+  SITE_URL?: string;
 }
 
 const CANONICAL_HOST = 'wearableroboticexoskeletons.com';
+const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -36,6 +40,35 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    const contentType = response.headers.get('Content-Type') ?? '';
+    const headers = new Headers(response.headers);
+
+    // Soft-404s and real 404s must never be indexed
+    if (response.status === 404 || response.status === 410) {
+      headers.set('X-Robots-Tag', 'noindex, nofollow');
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+
+    // Reinforce the preferred canonical at the edge (GSC duplicate-without-canonical fixes)
+    if (response.status === 200 && contentType.includes('text/html')) {
+      const path = url.pathname === '' ? '/' : url.pathname;
+      const canonical =
+        path === '/'
+          ? `${CANONICAL_ORIGIN}/`
+          : `${CANONICAL_ORIGIN}${path.endsWith('/') ? path : `${path}/`}`;
+      headers.set('Link', `<${canonical}>; rel="canonical"`);
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+
+    return response;
   },
 } satisfies ExportedHandler<Env>;
